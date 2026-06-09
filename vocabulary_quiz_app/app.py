@@ -46,6 +46,20 @@ class VocabularyQuizApp:
 
         self.next_word()
 
+    def next_word(self) -> None:
+        self.current = draw_word(self.words, self.root.nametowidget(".").children.get("rng"))
+        if not self.current:
+            import random
+            self.current = random.choice(self.words) if self.words else None
+        
+        if self.current:
+            self.word_var.set(self.current.term)
+        self.answer_entry.delete(0, tk.END)
+        self.feedback_var.set("")
+        self.checked = False
+        self.check_button.state(["!disabled"])
+        self.answer_entry.focus()
+
     def check_current(self) -> None:
         if self.current is None or self.checked:
             return
